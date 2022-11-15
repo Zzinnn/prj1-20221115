@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
 
-import lombok.val;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
@@ -19,7 +17,7 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 
 @Configuration
-@MapperScan("")
+@MapperScan("com.study.mapper")
 public class CustomConfig {
 
 	@Value("${aws.accessKeyId}")
@@ -27,6 +25,7 @@ public class CustomConfig {
 	
 	@Value("${aws.secretAccessKey}")
 	private String secretAccessKey;
+	
 	
 	@Value("${aws.s3.file.url.prefix}")
 	private String imgUrl;
@@ -38,7 +37,7 @@ public class CustomConfig {
 	public void init() {
 		servletContext.setAttribute("imgUrl", imgUrl);
 	}
-	
+
 	@Bean
 	public S3Client s3Client() {
 		return S3Client.builder()
